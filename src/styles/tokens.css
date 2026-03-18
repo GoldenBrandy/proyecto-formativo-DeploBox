@@ -1,0 +1,84 @@
+:root {
+    /* Primary color*/
+    --color-primary-950: #39A900;
+    --color-primary-900: #42AD0C;
+    --color-primary-800: #56B526;
+    --color-primary-700: #6ABE3F;
+    --color-primary-600: #7EC759;
+    --color-primary-500: #92CF72;
+    --color-primary-400: #A5D88C;
+    --color-primary-300: #B9E0A5;
+    --color-primary-200: #CDE9BF;
+    --color-primary-100: #E1F2D8;
+    --color-primary-50:  #F5FAF2;
+
+    /* Secondary color*/
+    --secondary-950: #083344;
+    --secondary-900: #164e63;
+    --secondary-800: #145e76;
+    --secondary-700: #0d7491;
+    --secondary-600: #0792b3;
+    --secondary-500: #05b7d5;
+    --secondary-400: #21d4ef;
+    --secondary-300: #50e5f9;
+    --secondary-200: #a5f3fc;
+    --secondary-100: #cffafe;
+    --secondary-50:  #ecfeff;
+
+    /* Tertiary color*/
+    --tertiary-950: #3f0e44;
+    --tertiary-900: #632669;
+    --tertiary-800: #71277A;
+    --tertiary-700: #8f309b;
+    --tertiary-600: #aa3dbc;
+    --tertiary-500: #c45cd9;
+    --tertiary-400: #d88ae8;
+    --tertiary-300: #e6b6f1;
+    --tertiary-200: #f0d6f8;
+    --tertiary-100: #f7ebfc;
+    --tertiary-50:  #fcf5fe;
+
+    /* Neutral color*/
+    --white: #FFFFFF;
+    --black: #000000;
+    --gray-950: #F6F6F6;
+    --gray-900: #E9E9E9;
+    --gray-800: #D1D1D1; 
+    --gray-700: #B8B8B8;
+    --gray-600: #9F9F9F;
+    --gray-500: #878787;
+    --gray-400: #6E6E6E;
+    --gray-300: #565656;
+    --gray-200: #3D3D3D;
+    --gray-100: #242424;
+    --gray-50:  #181818;
+
+    /*Typography*/
+    --main-font: work-sans, Calibri;
+    --secondary-font: Montserrat, Helvetica, Arial, sans-serif; 
+
+    /* Font weights crudos */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-bold: 700;
+
+    /* Fonts variants */
+    --light-variant: light;
+    --medium-variant: medium;
+    --regular-variant: regular;
+    --bold-variant: bold;
+
+
+    /*Font-size*/
+    --fs-xxxxl: 5rem; /* Ultra grande*/
+    --fs-xxxl: 4rem; /* Super grande */
+    --fs-xxl: 3rem; /* Extra grande */
+    --fs-xl: 2.5rem; /* Muy grande */
+    --fs-lg: 2rem; /* Grande */
+    --fs-md: 1.5rem; /* Mediano */
+    --fs-sm: 1.25rem; /* Pequeño */
+    --fs-xs: 1rem; /* Base */
+    --fs-xxs: 0.875rem; /* Muy pequeño 14px */
+    --fs-xxxs: 0.5rem; /* Extra extra pequeño 12px */
+    --fs-xxxxs: 0.5rem; /* Minimo 8px */
+}

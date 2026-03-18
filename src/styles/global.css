@@ -1,0 +1,65 @@
+@import url(tokens.css);
+@import url(semantic.css);
+@import "tailwindcss";
+
+@theme {
+
+/* ======= BRAND ======= */
+
+--color-brand: var(--semantic-brand);
+--color-brand-hover: var(--semantic-brand-hover);
+--color-brand-soft: var(--semantic-brand-soft);
+
+/* ======= BACKGROUND ======= */
+
+--color-background: var(--semantic-background);
+--color-surface: var(--semantic-surface);
+--color-surface-muted: var(--semantic-surface-muted);
+--color-surface-muted: var(--semantic-surface-muted);
+--color-inverse-background: var(--semantic-inverse-background);
+
+/* ======= TEXT ======= */
+
+--color-text-primary: var(--semantic-text-primary);
+--color-text-secondary: var(--semantic-text-secondary);
+--color-text-muted: var(--semantic-text-muted);
+--color-text-inverse: var(--semantic-text-inverse);
+
+/* ======= BORDER ======= */
+
+--color-border: var(--semantic-border);
+--color-border-strong: var(--semantic-border-strong);
+
+/* ======= FOCUS ======= */
+
+--color-focus-ring: var(--semantic-focus-ring);
+--color-focus-border: var(--semantic-focus-border);
+
+/* ======= STATE ======= */
+
+--color-success: var(--semantic-success);
+--color-warning: var(--semantic-warning);
+--color-error: var(--semantic-error);
+
+/* ======= TYPOGRAPHY ======= */
+
+--color-display: var(--semantic-font-size-display); 
+--color-h1: var(--semantic-font-size-h1); 
+--color-h2: var(--semantic-font-size-h2); 
+--color-h3: var(--semantic-font-size-h3); 
+--color-body: var(--semantic-font-size-body); 
+--color-medium: var(--semantic-font-size-medium); 
+--color-small: var(--semantic-font-size-small); 
+--color-caption: var(--semantic-font-size-caption); 
+
+/* ======= FONT WEIGHT ======= */
+
+--color-heading: var(--semantic-font-weight-heading);
+--color-body: var(--semantic-font-weight-body);
+--color-label: var(--semantic-font-weight-label);
+
+
+
+
+
+}
