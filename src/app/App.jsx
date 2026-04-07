@@ -6,7 +6,7 @@ export default function App() {
       <div className="min-h text-center grid grid-cols-1 gap-4">
 
         <h1 className="text-white text-4xl font-bold bg-fuchsia-800 p-6">
-          Revolteria Dosquebradas 23
+          Proyecto Practico 
         </h1>
 
         <CreateUserPage />

@@ -12,7 +12,7 @@ export default function Button({
     ...props //Propiedades adicionales (onClick, disable, ect)
 }) {
     const variants = {
-        primary: "bg-green text-brand border",
+        primary: "bg-green text-brand border text-h1",
         secondary: "bg-background border border-border text-text-inverse hover:bg-surface-muted"
     };
 
@@ -24,7 +24,7 @@ export default function Button({
         `,
 
         md: `
-            h-10 px-4
+            h-20 w-40 px-4
             before:absolute before:content['']
             before:-inset-y-[7px] before:-inset-x-[0px]
         `

@@ -1,6 +1,17 @@
-import { Input, Button } from "@/shared";
+import { useState, useEffect } from "react";
+import { getDocumentTypes } from "../services/selectService";
+
+import { Input, Button, Select } from "@/shared";
+
 
 export default function UserRegisterForm(){
+
+    const [documentType, setDocumentType] = useState([]);
+
+    useEffect(() => {
+        getDocumentTypes().then(setDocumentType);
+    },[]);
+
 
     // Handle
 
@@ -30,14 +41,26 @@ export default function UserRegisterForm(){
                     label="Nombre"
                     placeholder="Ingrese su nombre"
                     onChange={handleNameChange}
+
+                    
                     />
                     <Input 
                     label="Nombre"
                     placeholder="Ingrese su nombre"
+                    /*
+                    onKeyDown={() => console.log("")}
+                    onKeyUp={() => console.log("")}
+                    onKeyPress={() => console.log("")}
+                    onChange={(e) => console.log(e.target.value)}
+                    onFocus={() => console.log("input enfocado - Cristian Salazar")}
+                    */
+                    onBlur={() => console.log("input desenfocado - Cristian Salazar")}
                     />
                     <Input 
                     label="Nombre"
                     placeholder="Ingrese su nombre"
+
+                    
                     />
                     <Input 
                     label="Nombre"
@@ -47,6 +70,7 @@ export default function UserRegisterForm(){
                     label="Telefono"
                     placeholder="Ingrese su telefono"
                     type="tel"
+                    onSelect={() => console.log("texto seleccionado - Cristian Salazar")}
                     />
                     <Input 
                     label="Correo"
@@ -65,6 +89,14 @@ export default function UserRegisterForm(){
                     type="number"
                     />
 
+                    <Select
+                    label="Tipo de documento"
+                    name="documentType"
+                    options={documentType}
+                    >
+                    </Select>
+
+
                 {/* Actions */}
 
                 <div className="flex items-end justify-end gap-6">
@@ -77,18 +109,15 @@ export default function UserRegisterForm(){
 
                     <Button  
                         variant = "primary" 
-                        size="md"
-                    >
+                        size="md">
                         Guardar
                     </Button>
                 </div>
-
-                </div>
-
-                
-
-            </form>
-            
-        </div>
+            </div>
+        </form>
+        {/* <DeleteCounter /> */}
+        {/* <DeleteEffect /> */}
+        {/* <DeleteCounter2 /> */}
+    </div>
     )
 };
