@@ -1,50 +1,52 @@
 /**
- * Componente Botón
- * 
- * Botón reutilizable con variantes visuales y tamaños controlados, área intectiva mínima de 48px
+ * Componente Boton
+ *
+ * Boton reutilizable con variantes visuales y tamanos controlados.
  */
 
 export default function Button({
     variant = "primary", // Define el estilo visual
-    size = "md", // Define tamaño visual
-    type = "button", // Tipos de botón (button, submit, reset)
-    children, // Contenido interno del botón (texto, icono)
-    ...props //Propiedades adicionales (onClick, disable, ect)
+    size = "base", // Define tamano visual
+    type = "button", // Tipos de boton (button, submit, reset)
+    children, // Contenido interno del boton (texto, icono)
+    ...props // Propiedades adicionales (onClick, disabled, etc)
 }) {
     const variants = {
-        primary: "bg-green text-brand border text-body hover:bg-surface-muted hover:text-text-inverse", 
-        secondary: "bg-background border border-border text-text-inverse hover:bg-surface-muted"
+        primary: `
+            bg-[color:var(--white)]
+            border border-[color:var(--primary-950)]
+            text-[color:var(--primary-950)]
+            hover:bg-[color:var(--primary-950)]
+            hover:text-[color:var(--white)]
+        `,
+        secondary: `
+            bg-[color:var(--white)]
+            border border-[color:var(--primary-950)]
+            text-[color:var(--primary-950)]
+            hover:bg-[color:var(--primary-950)]
+            hover:text-[color:var(--white)]
+        `,
     };
 
     const sizes = {
-        sm: `
-            h-9 px-3
-            before:absolute before:content['']
-            before:-inset-y-[6px] before:-inset-x-[0px]
-        `,
-
-        md: `
-            h-20 w-40 px-4
-            before:absolute before:content['']
-            before:-inset-y-[7px] before:-inset-x-[0px]
-        `
-    }
+        base: "h-auto w-auto px-4 py-1.5 text-medium",
+        sm: "h-auto w-auto px-3 py-1 text-small",
+        md: "h-auto w-auto px-5 py-2 text-medium",
+    };
 
     return (
-
         <button
-            className= {`
-                relative
+            className={`
                 inline-flex items-center justify-center
                 rounded-md
-                transition-colors
+                transition-colors duration-200
                 ${variants[variant]}
                 ${sizes[size]}
-                ${type}
             `}
+            type={type}
             {...props}
-            >        
+        >
             {children}
         </button>
-    )
+    );
 }

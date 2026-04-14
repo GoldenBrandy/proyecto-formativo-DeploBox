@@ -1,4 +1,4 @@
-export default function Input({    label,   type = "text",   ...props })
+export default function Input({    label,   type = "text", error,  ...props })
 {
      //Cuerpo de la función
     return(
@@ -7,13 +7,17 @@ export default function Input({    label,   type = "text",   ...props })
         {/* Label */}
         {label && (
             <label 
-                className="
-                    block
+                className= {
+                    `block
                     text-caption
                     mb-1
                     w-full
                     text-left
-                    ">    
+                    place-self-start
+                    ${error ? "text-red-800" : "text-text-primary"}
+                `}
+                    
+                    >    
                 {label}
             </label>
 
@@ -49,28 +53,33 @@ export default function Input({    label,   type = "text",   ...props })
 
                 <input
                     type={type}
-                    className="
-                        relative
+                    className= {` relative
                         w-full
                         h-12
                         rounded-md
                         border
-                        border-border
                         px-4
                         text-base
+                        transition-colors
 
-                        hover:border-focus-border
-                        focus:ring-1
                         focus:outline-none
-                        focus:ring-1
-                        focus:ring-[color:var(--primary-950)]
-                    "
+                        ${
+                            error
+                                ? "border-red-800 hover:border-red-800 focus:border-[3px] focus:border-red-800"
+                                : "border-border hover:border-[color:var(--primary-950)] hover:border-2 focus:border-[3px] focus:border-[color:var(--primary-950)]"
+                        }
+                        `}
+                       
+                    
                     {...props}
                     
                     >
                        
                 </input>
             </div>
+
+            {/* FeedBack */}
+            {error && <p className="mt-1 w-full text-left text-caption text-red-800">{error}</p>}
         </div>
     )
 };

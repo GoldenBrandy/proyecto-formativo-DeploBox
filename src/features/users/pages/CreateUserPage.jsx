@@ -3,7 +3,7 @@ import UserRegisterForm from "../components/UserRegisterForm";
 export default function CreateUserPage(){
 
     return(
-        <div>
+        <div className="w-full flex justify-center">
 
             <UserRegisterForm />
 

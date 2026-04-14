@@ -2,30 +2,40 @@ export default function Select({
     label,
     name,
     options = [],
+    error,
+    ...props
 }) {
     return (
         <div className="w-[320px]"> 
         {label && (
-            <label className="block text-caption mb-1 text-text-secondary w-full text-left">
+            <label
+                className={`block text-caption mb-1 w-full text-left ${
+                    error ? "text-red-800" : "text-text-secondary"
+                }`}
+            >
                 {label}
             </label>
         )}
 
         <select
-            name = {name}
-            className="
+            name={name}
+            className={`
             w-full
             h-12
             rounded-md
             border
-            border-[color:var(--primary-950)]
             px-4
+            transition-colors
 
             focus:outline-none
-            focus:ring-2
-            focus:ring-[color:var(--primary-950)]
-            focus:border-[color:var(--primary-950)]
-            "
+            focus:ring-0
+            ${
+                error
+                    ? "border-red-800 hover:border-red-800 focus:border-[3px] focus:border-red-800"
+                    : "border-border hover:border-[color:var(--primary-950)] hover:border-2 focus:border-[3px] focus:border-[color:var(--primary-950)]"
+            }
+            `}
+            {...props}
         >
             {options.map((option) => (
                 <option 
@@ -36,6 +46,7 @@ export default function Select({
                 </option>
             ))}
         </select>     
+        {error && <p className="mt-1 w-full text-left text-caption text-red-800">{error}</p>}
         </div>
     )
 }
