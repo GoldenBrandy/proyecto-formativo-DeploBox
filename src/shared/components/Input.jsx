@@ -9,8 +9,10 @@ export default function Input({    label,   type = "text",   ...props })
             <label 
                 className="
                     block
-                    text-[8px]
+                    text-caption
                     mb-1
+                    w-full
+                    text-left
                     ">    
                 {label}
             </label>
