@@ -59,10 +59,11 @@ export default function Input({    label,   type = "text",   ...props })
                         px-4
                         text-base
 
-                        focus: outline-none
-                        focus:ring-2
-                        focus:ring-focus-ring
-                        focus:border-focus-border
+                        hover:border-focus-border
+                        focus:ring-1
+                        focus:outline-none
+                        focus:ring-1
+                        focus:ring-[color:var(--primary-950)]
                     "
                     {...props}
                     
