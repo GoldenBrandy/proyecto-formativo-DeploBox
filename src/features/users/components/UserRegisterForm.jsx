@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
+import heroFreelancer from "@/assets/images/imagen-hero-freelancer.jpg";
 
-import { Input, Button, Select } from "@/shared";
+import { Input, Button, Select, Checkbox } from "@/shared";
 
 
 export default function UserRegisterForm(){
@@ -13,7 +14,10 @@ export default function UserRegisterForm(){
         userPhone: "",
         userDocumentType: "",
         userDocumentNumber: "",
-        userPassword: ""
+        userPassword: "",
+        isStaff: false,
+        isActive: true,
+        isSuperAdmin: false,
     });
 
     useEffect(() => {
@@ -28,7 +32,7 @@ export default function UserRegisterForm(){
      */
     const handleChange = (e) => {
         // Se obtiene el nombre del input y su valor
-        const { name, value } = e.target;
+        const { name, type, value, checked } = e.target;
 
         // Se actualiza el estado del formulario con el nuevo valor
         setFormData((prev) => ({
@@ -36,7 +40,7 @@ export default function UserRegisterForm(){
             ...prev,
 
             // Se actualiza el valor del input que cambió
-            [name]: value, 
+            [name]: type === "checkbox" ? checked : value, 
         }))
     };
 
@@ -82,7 +86,13 @@ export default function UserRegisterForm(){
 
 
     return (
-         <div className="w-full max-w-4xl mx-auto p-6">
+         <div
+            className="relative min-h-[calc(100vh-100px)] w-full flex-1 overflow-hidden bg-cover bg-center p-6"
+            style={{ backgroundImage: `url(${heroFreelancer})` }}
+         >
+            <div className="absolute inset-0 bg-white/45" />
+
+            <div className="relative text-black [&_button]:text-black [&_h1]:text-black [&_input]:text-black [&_input::placeholder]:text-black/70 [&_label]:text-black [&_select]:text-black [&_span]:text-black">
 
             <h1 className='text-text-primary text-2xl mb-6'>
                 Registro de usuarios
@@ -158,10 +168,39 @@ export default function UserRegisterForm(){
                     error = {errors.userPassword}
                     />
 
+                    <div className="flex h-12 items-center">
+                        <Checkbox
+                            id="isStaff"
+                            name="isStaff"
+                            label="Es staff"
+                            checked={formData.isStaff}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="flex h-12 items-center">
+                        <Checkbox
+                            id="isActive"
+                            name="isActive"
+                            label="Está activo?"
+                            checked={formData.isActive}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="flex h-12 items-center">
+                        <Checkbox
+                            id="isSuperAdmin"
+                            name="isSuperAdmin"
+                            label="Es un super administrador?"
+                            checked={formData.isSuperAdmin}
+                            onChange={handleChange}
+                        />
+                    </div>
 
                 {/* Actions */}
 
-                <div className="col-span-2 flex items-center justify-center gap-6 mt-2">
+                <div className="flex h-12 items-center justify-end gap-6">
                     <Button  
                         variant="secondary"
                         type="button"
@@ -178,6 +217,7 @@ export default function UserRegisterForm(){
                 </div>
             </div>
         </form>
+            </div>
     </div>
     )
 };

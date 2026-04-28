@@ -17,6 +17,7 @@
     --color-surface: var(--semantic-surface);
     --color-surface-muted: var(--semantic-surface-muted);
     --color-background-inverse: var(--semantic-background-inverse);
+    --color-border: var(--semantic-border);
 
     /* TEXT */
 
