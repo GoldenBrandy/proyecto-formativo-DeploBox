@@ -6,7 +6,7 @@ export default function DeleteCounter() {
     return (
         <div>
             <p>Contador: {count}</p>
-            <button onClick={() => setCount(count + 1)} className="border p-[12px]">
+            <button onClick={() => setCount(count + 1)} className="border p-3">
                 Incrementar
             </button>
         </div>

@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
-import heroFreelancer from "@/assets/images/imagen-hero-freelancer.jpg";
+import defaultBackgroundImage from "@/assets/images/bg-4.jpg";
+import { Input, Button, Select, Checkbox, IconButton, Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from "@/shared";
+import { Link, useNavigate } from "react-router-dom";
+import { SquareArrowRightEnter, Menu } from "lucide-react";
 
-import { Input, Button, Select, Checkbox } from "@/shared";
 
 
-export default function UserRegisterForm(){
+export default function UserRegisterForm({
+    backgroundImage = defaultBackgroundImage,
+    nextTo = "/dashboard",
+    cancelTo = "/",
+    showBackButton = false,
+    backTo = "/auth",
+}){
+    const navigate = useNavigate();
     const [documentType, setDocumentType] = useState([]);
     const [formData, setFormData] = useState({
         userName: "",
@@ -87,25 +96,37 @@ export default function UserRegisterForm(){
 
     return (
          <div
-            className="relative min-h-[calc(100vh-100px)] w-full flex-1 overflow-hidden bg-cover bg-center p-6"
-            style={{ backgroundImage: `url(${heroFreelancer})` }}
-         >
-            <div className="absolute inset-0 bg-white/45" />
 
+            className="relative min-h-screen w-full flex-1 overflow-hidden bg-cover bg-center p-6"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+         >
             <div className="relative text-black [&_button]:text-black [&_h1]:text-black [&_input]:text-black [&_input::placeholder]:text-black/70 [&_label]:text-black [&_select]:text-black [&_span]:text-black">
 
-            <h1 className='text-text-primary text-2xl mb-6'>
+            {showBackButton && (
+                <div className="mb-4">
+                    <IconButton
+                        ariaLabel="Volver"
+                        variant="ghost"
+                        onClick={() => navigate(backTo)}
+                        className="text-black"
+                    >
+                        <MoveLeft />
+                    </IconButton>
+                </div>
+            )}
+
+            <h1 className='text-text-primary text-2xl mb-6 text-center '>
                 Registro de usuarios
             </h1>
 
             <form 
-            className="grid grid-cols-1 items-center" 
+            className="grid grid-cols-1 items-center " 
             onSubmit={handleSubmit}
             noValidate
             >
 
 
-                <div className="grid grid-cols-2 gap-6 my-0 mx-auto">
+                <div className="grid grid-cols-2 gap-6 my-0 mx-auto border p-12 rounded-md">
 
                     {/* Inputs */}
 
@@ -204,6 +225,7 @@ export default function UserRegisterForm(){
                     <Button  
                         variant="secondary"
                         type="button"
+                        onClick={() => navigate(cancelTo)}
                     >
                         Cancelar
                     </Button>
@@ -214,10 +236,42 @@ export default function UserRegisterForm(){
                     >
                         Guardar
                     </Button>
+
+                    <IconButton
+                        ariaLabel="Ir al dashboard"
+                        variant="ghost"
+                        onClick={() => navigate(nextTo)}
+                    >
+                        <SquareArrowRightEnter />
+                    </IconButton>
+
+                    {/* ======= Dropdown ======= */}
+                    <div>
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <IconButton ariaLabel="Menú de usuario">
+                                    <Menu />
+                                </IconButton>
+                            </DropdownTrigger>
+
+                        <DropdownContent>
+                            <DropdownItem>
+                                <Link to="/auth" className="block w-full">
+                                    Autenticación
+                                </Link>
+                            </DropdownItem>
+                            <DropdownItem>
+                                <Link to="/dashboard" className="block w-full">
+                                    Panel de control
+                                </Link>
+                            </DropdownItem>
+                        </DropdownContent>
+                        </Dropdown>
+                    </div>
                 </div>
             </div>
         </form>
-            </div>
+        </div>
     </div>
     )
 };
