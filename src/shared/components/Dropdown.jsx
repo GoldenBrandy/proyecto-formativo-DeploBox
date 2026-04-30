@@ -4,10 +4,11 @@ import {
     useState,
     useRef,
     useEffect,
+    useCallback,
     cloneElement
 } from "react";
 
-export const DropdownContext = createContext(null);
+const DropdownContext = createContext(null);
 
 export function Dropdown({
     children,
@@ -18,13 +19,13 @@ export function Dropdown({
     const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
     const isControlled = controlledOpen !== undefined;
     const open = isControlled ? controlledOpen : uncontrolledOpen;
-    const setOpen = (value) => {
+    const setOpen = useCallback((value) => {
         if (isControlled) {
             onOpenChange?.(value);
         } else {
             setUncontrolledOpen(value);
         }
-    };
+    }, [isControlled, onOpenChange]);
 
     //useRef: Se usa para referenciar el trigger o menú del Dropdown
     //El trigger es el elemento que abre o cierra el componente
@@ -40,7 +41,7 @@ export function Dropdown({
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+    }, [setOpen]);
 
     // Escape key o tecla escape 
     useEffect(() => {
@@ -50,7 +51,7 @@ export function Dropdown({
 
         document.addEventListener("keydown", handleEscape);
         return () => document.removeEventListener("keydown", handleEscape);
-    }, []);
+    }, [setOpen]);
 
     return (
         //Inyecta el estado compartido al dropdown 
@@ -87,18 +88,20 @@ export function DropdownContent({ children, className = "" }) {
         <div
             role="menu"
             className={`
-                absolute
-                mt-1
+                absolute right-0 top-full z-50
+                mt-2
                 min-w-48
-                border
-                text-text-inverse
+                border border-neutral-200
+                bg-white
+                text-black
+                shadow-lg shadow-black/10
                 p-1
-                dark:bg-neutral-950/80
+                dark:border-neutral-700
+                dark:bg-neutral-950
+                dark:text-white
                 backdrop-blur-[1px]
-                rounded-2xl
+                rounded-xl
                 overflow-hidden
-                hover:shadow-black
-                transition-shadow duration-700
                 ${className}
             `}
         >
@@ -125,7 +128,7 @@ export function DropdownItem({
             role="menuitem"
             onClick={handleClick}
             className={`
-                w-full text-left px-3 py-2 rounded-lg hover:bg-gray-500 focus:bg-gray-100 transition-colors
+                w-full text-left px-3 py-2 rounded-lg hover:bg-neutral-100 focus:bg-neutral-100 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 transition-colors
                 ${className}
             `}
         >

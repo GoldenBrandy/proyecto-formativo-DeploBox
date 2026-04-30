@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
-import defaultBackgroundImage from "@/assets/images/bg-4.jpg";
 import { Input, Button, Select, Checkbox, IconButton, Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from "@/shared";
 import { Link, useNavigate } from "react-router-dom";
 import { SquareArrowRightEnter, Menu } from "lucide-react";
@@ -9,7 +8,7 @@ import { SquareArrowRightEnter, Menu } from "lucide-react";
 
 
 export default function UserRegisterForm({
-    backgroundImage = defaultBackgroundImage,
+    backgroundImage = null,
     nextTo = "/dashboard",
     cancelTo = "/",
     showBackButton = false,
@@ -97,8 +96,8 @@ export default function UserRegisterForm({
     return (
          <div
 
-            className="relative min-h-screen w-full flex-1 overflow-hidden bg-cover bg-center p-6"
-            style={{ backgroundImage: `url(${backgroundImage})` }}
+            className={`relative min-h-[calc(100vh-4rem)] w-full flex-1 overflow-hidden p-6 ${backgroundImage ? "bg-cover bg-center" : ""}`}
+            style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
          >
             <div className="relative text-black [&_button]:text-black [&_h1]:text-black [&_input]:text-black [&_input::placeholder]:text-black/70 [&_label]:text-black [&_select]:text-black [&_span]:text-black">
 
