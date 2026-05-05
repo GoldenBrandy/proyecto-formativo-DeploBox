@@ -32,7 +32,7 @@ export default function Select({
             ${
                 error
                     ? "border-red-800 hover:border-red-800 focus:border-[3px] focus:border-red-800"
-                    : "border-border hover:border-[color:var(--primary-950)] hover:border-2 focus:border-[3px] focus:border-[color:var(--primary-950)]"
+                    : "border-border hover:border-(--primary-950) hover:border-2 focus:border-[3px] focus:border-(--primary-950)"
             }
             `}
             {...props}

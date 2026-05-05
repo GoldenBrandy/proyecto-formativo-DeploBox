@@ -93,7 +93,6 @@ export function DropdownContent({ children, className = "" }) {
                 min-w-48
                 border border-neutral-200
                 bg-white
-                text-black
                 shadow-lg shadow-black/10
                 p-1
                 dark:border-neutral-700
@@ -102,6 +101,8 @@ export function DropdownContent({ children, className = "" }) {
                 backdrop-blur-[1px]
                 rounded-xl
                 overflow-hidden
+
+                text-white
                 ${className}
             `}
         >

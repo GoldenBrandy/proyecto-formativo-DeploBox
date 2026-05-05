@@ -12,7 +12,7 @@ export default function DeleteCounter2() {
         <div>
             <h2>{count}</h2>
             <p>{message}</p>
-            <button onClick={() => setCount(count + 1)} className="border p-[12px]">Incrementar
+            <button onClick={() => setCount(count + 1)} className="border p-3">Incrementar
             </button>
         </div>
     )
