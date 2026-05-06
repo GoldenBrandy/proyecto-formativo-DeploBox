@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
-import { Input, Button, Select, Checkbox, IconButton, Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from "@/shared";
+import { 
+    Input, 
+    Button, 
+    Select, 
+    Checkbox, 
+    IconButton, 
+    Dropdown, 
+    DropdownTrigger, 
+    DropdownContent, 
+    DropdownItem, 
+    FileInput 
+} from "@/shared";
 import { Link, useNavigate } from "react-router-dom";
-import { SquareArrowRightEnter, Menu } from "lucide-react";
+import { SquareArrowRightEnter, Menu, MoveLeft } from "lucide-react";
 
 
 
@@ -26,6 +37,7 @@ export default function UserRegisterForm({
         isStaff: false,
         isActive: true,
         isSuperAdmin: false,
+        userImage: [],
     });
 
     useEffect(() => {
@@ -94,158 +106,139 @@ export default function UserRegisterForm({
 
 
     return (
-         <div
-
+        <div
             className={`relative min-h-[calc(100vh-4rem)] w-full flex-1 overflow-hidden p-6 ${backgroundImage ? "bg-cover bg-center" : ""}`}
             style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
-         >
+        >
             <div className="relative text-black [&_button]:text-black [&_h1]:text-black [&_input]:text-black [&_input::placeholder]:text-black/70 [&_label]:text-black [&_select]:text-black [&_span]:text-black">
+                {showBackButton && (
+                    <div className="mb-4">
+                        <IconButton
+                            ariaLabel="Volver"
+                            variant="ghost"
+                            onClick={() => navigate(backTo)}
+                            className="text-black"
+                        >
+                            <MoveLeft />
+                        </IconButton>
+                    </div>
+                )}
 
-            {showBackButton && (
-                <div className="mb-4">
-                    <IconButton
-                        ariaLabel="Volver"
-                        variant="ghost"
-                        onClick={() => navigate(backTo)}
-                        className="text-black"
-                    >
-                        <MoveLeft />
-                    </IconButton>
-                </div>
-            )}
+                <h1 className="mb-6 text-center text-2xl text-text-primary">
+                    Registro de usuarios
+                </h1>
 
-            <h1 className='text-text-primary text-2xl mb-6 text-center '>
-                Registro de usuarios
-            </h1>
-
-            <form 
-            className="grid grid-cols-1 items-center " 
-            onSubmit={handleSubmit}
-            noValidate
-            >
-
-
-                <div className="grid grid-cols-2 gap-6 my-0 mx-auto border p-12 rounded-md">
-
-                    {/* Inputs */}
-
-                    <Input 
-                    label="Nombre"
-                    name="userName"
-                    placeholder="Ingrese su nombre"
-                    value = {formData.userName}
-                    onChange={handleChange}
-                    error = {errors.userName}
-                    />
-
-                    <Input 
-                    label="Correo"
-                    name="userEmail"
-                    placeholder="Ingrese su correo"
-                    type="email"
-                    value = {formData.userEmail}
-                    onChange={handleChange}
-                    error = {errors.userEmail}
-                    />
-
-                    <Input 
-                    label="Telefono"
-                    name="userPhone"
-                    placeholder="Ingrese su telefono"
-                    type="tel"
-                    value = {formData.userPhone}
-                    onChange={handleChange}
-                    error = {errors.userPhone}
-
-                    />
-
-                    <Select
-                    label="Tipo de documento"
-                    name="userDocumentType"
-                    options={documentType}
-                    value = {formData.userDocumentType}
-                    onChange={handleChange}
-                    error = {errors.userDocumentType}
-                    >
-                    </Select>
-
-                    <Input 
-                    label="Número de documento"
-                    name="userDocumentNumber"
-                    placeholder="Ingrese su número de documento"
-                    value = {formData.userDocumentNumber}
-                    onChange={handleChange}
-                    error = {errors.userDocumentNumber}
-                    />
-
-                    <Input 
-                    label="Contrasena"
-                    name="userPassword"
-                    placeholder="Ingrese su contrasena"
-                    type='password'
-                    value = {formData.userPassword}
-                    onChange={handleChange}
-                    error = {errors.userPassword}
-                    />
-
-                    <div className="flex h-12 items-center">
-                        <Checkbox
-                            id="isStaff"
-                            name="isStaff"
-                            label="Es staff"
-                            checked={formData.isStaff}
+                <form className="grid grid-cols-1 items-center" onSubmit={handleSubmit} noValidate>
+                    <div className="mx-auto grid grid-cols-2 gap-6 rounded-md border p-12">
+                        <Input
+                            label="Nombre"
+                            name="userName"
+                            placeholder="Ingrese su nombre"
+                            value={formData.userName}
                             onChange={handleChange}
+                            error={errors.userName}
                         />
+
+                        <Input
+                            label="Correo"
+                            name="userEmail"
+                            placeholder="Ingrese su correo"
+                            type="email"
+                            value={formData.userEmail}
+                            onChange={handleChange}
+                            error={errors.userEmail}
+                        />
+
+                        <Input
+                            label="Telefono"
+                            name="userPhone"
+                            placeholder="Ingrese su telefono"
+                            type="tel"
+                            value={formData.userPhone}
+                            onChange={handleChange}
+                            error={errors.userPhone}
+                        />
+
+                        <Select
+                            label="Tipo de documento"
+                            name="userDocumentType"
+                            options={documentType}
+                            value={formData.userDocumentType}
+                            onChange={handleChange}
+                            error={errors.userDocumentType}
+                        />
+
+                        <Input
+                            label="Número de documento"
+                            name="userDocumentNumber"
+                            placeholder="Ingrese su número de documento"
+                            value={formData.userDocumentNumber}
+                            onChange={handleChange}
+                            error={errors.userDocumentNumber}
+                        />
+
+                        <Input
+                            label="Contrasena"
+                            name="userPassword"
+                            placeholder="Ingrese su contrasena"
+                            type="password"
+                            value={formData.userPassword}
+                            onChange={handleChange}
+                            error={errors.userPassword}
+                        />
+
+                        <div className="flex h-12 items-center">
+                            <Checkbox
+                                id="isStaff"
+                                name="isStaff"
+                                label="Es staff"
+                                checked={formData.isStaff}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className="flex h-12 items-center">
+                            <Checkbox
+                                id="isActive"
+                                name="isActive"
+                                label="Está activo?"
+                                checked={formData.isActive}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className="flex h-12 items-center gap-4">
+                            <Checkbox
+                                id="isSuperAdmin"
+                                name="isSuperAdmin"
+                                label="Es un super administrador?"
+                                checked={formData.isSuperAdmin}
+                                onChange={handleChange}
+                            />
+
+                            <FileInput
+                                value={formData.userImage}
+                                onChange={(files) =>
+                                    setFormData((prev) => ({ ...prev, userImage: files }))
+                                }
+                                multiple={true}
+                            />
+                        </div>
                     </div>
 
-                    <div className="flex h-12 items-center">
-                        <Checkbox
-                            id="isActive"
-                            name="isActive"
-                            label="Está activo?"
-                            checked={formData.isActive}
-                            onChange={handleChange}
-                        />
-                    </div>
+                    <div className="flex h-12 items-center justify-end gap-6">
+                        <Button variant="secondary" type="button" onClick={() => navigate(cancelTo)}>
+                            Cancelar
+                        </Button>
 
-                    <div className="flex h-12 items-center">
-                        <Checkbox
-                            id="isSuperAdmin"
-                            name="isSuperAdmin"
-                            label="Es un super administrador?"
-                            checked={formData.isSuperAdmin}
-                            onChange={handleChange}
-                        />
-                    </div>
+                        <Button variant="primary" type="submit">
+                            Guardar
+                        </Button>
 
-                {/* Actions */}
+                        <IconButton ariaLabel="Ir al dashboard" variant="ghost" onClick={() => navigate(nextTo)}>
+                            <SquareArrowRightEnter />
+                        </IconButton>
 
-                <div className="flex h-12 items-center justify-end gap-6">
-                    <Button  
-                        variant="secondary"
-                        type="button"
-                        onClick={() => navigate(cancelTo)}
-                    >
-                        Cancelar
-                    </Button>
-
-                    <Button  
-                        variant="primary"
-                        type="submit"
-                    >
-                        Guardar
-                    </Button>
-
-                    <IconButton
-                        ariaLabel="Ir al dashboard"
-                        variant="ghost"
-                        onClick={() => navigate(nextTo)}
-                    >
-                        <SquareArrowRightEnter />
-                    </IconButton>
-
-                    {/* ======= Dropdown ======= */}
-                    <div>
                         <Dropdown>
                             <DropdownTrigger>
                                 <IconButton ariaLabel="Menú de usuario">
@@ -253,24 +246,23 @@ export default function UserRegisterForm({
                                 </IconButton>
                             </DropdownTrigger>
 
-                        <DropdownContent>
-                            <DropdownItem>
-                                <Link to="/auth" className="block w-full">
-                                    Autenticación
-                                </Link>
-                            </DropdownItem>
-                            <DropdownItem>
-                                <Link to="/dashboard" className="block w-full">
-                                    Panel de control
-                                </Link>
-                            </DropdownItem>
-                        </DropdownContent>
+                            <DropdownContent>
+                                <DropdownItem>
+                                    <Link to="/auth" className="block w-full">
+                                        Autenticación
+                                    </Link>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <Link to="/dashboard" className="block w-full">
+                                        Panel de control
+                                    </Link>
+                                </DropdownItem>
+                            </DropdownContent>
                         </Dropdown>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
         </div>
-    </div>
-    )
-};
+    );
+}
+
