@@ -129,7 +129,7 @@ export default function UserRegisterForm({
                 </h1>
 
                 <form className="grid grid-cols-1 items-center" onSubmit={handleSubmit} noValidate>
-                    <div className="mx-auto grid grid-cols-2 gap-6 rounded-md border p-12">
+                    <div className="mx-auto grid grid-cols sm:grid-cols-2 gap-6 rounded-md border p-12">
                         <Input
                             label="Nombre"
                             name="userName"

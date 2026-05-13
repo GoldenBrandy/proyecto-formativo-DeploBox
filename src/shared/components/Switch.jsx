@@ -11,6 +11,7 @@ export default function Switch({
     disable = false,
     disabled,
     size = "md",
+    className,
 }) {
     /**Estado interno del componente
      * Se inicializa con el valor recibido desde la prop "checked", 
@@ -60,20 +61,22 @@ export default function Switch({
 
         // Botón que funciona como switch
         <button
+            type="button"
             onClick={handleToggle} // Evento que cambia el estado
             disabled={isDisabled} // Permite deshabilitar el botón
             className={`
-                relative inline-flex items-center rounded-full transition-colors
+                relative inline-flex shrink-0 items-center rounded-full border-0 p-0 align-middle transition-colors
                 ${sizes[size] ?? sizes.md}
                 ${isActive ? "bg-green-500" : "bg-gray-300"}
                 ${isDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+                ${className}
             `}
         >
 
             {/* "Knob" del switch (el círculo que se mueve de izquierda a derecha) */}
             <span
                 className={`
-                    absolute left-0.5 flex items-center justify-center
+                    absolute left-0.5 top-1/2 flex -translate-y-1/2 items-center justify-center
                     rounded-full bg-white shadow
                     transition-transform duration-200
                     ${knobSizes[size] ?? knobSizes.md}

@@ -6,7 +6,7 @@ export default function Select({
     ...props
 }) {
     return (
-        <div className="w-[320px]"> 
+        <div className="w-full"> 
         {label && (
             <label
                 className={`block text-caption mb-1 w-full text-left ${

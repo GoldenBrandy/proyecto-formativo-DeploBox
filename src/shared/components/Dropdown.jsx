@@ -7,6 +7,7 @@ import {
     useCallback,
     cloneElement
 } from "react";
+import { createPortal } from "react-dom";
 
 const DropdownContext = createContext(null);
 
@@ -30,11 +31,16 @@ export function Dropdown({
     //useRef: Se usa para referenciar el trigger o menú del Dropdown
     //El trigger es el elemento que abre o cierra el componente
     const containerRef = useRef(null);
+    const triggerRef = useRef(null);
+    const contentRef = useRef(null);
 
     // Click outside o fuera del componente
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (containerRef.current && !containerRef.current.contains(e.target)) {
+            const clickedInsideContainer = containerRef.current && containerRef.current.contains(e.target);
+            const clickedInsideContent = contentRef.current && contentRef.current.contains(e.target);
+
+            if (!clickedInsideContainer && !clickedInsideContent) {
                 setOpen(false);
             }
         };
@@ -55,8 +61,8 @@ export function Dropdown({
 
     return (
         //Inyecta el estado compartido al dropdown 
-        <DropdownContext.Provider value={{ open, setOpen }}>
-            <div ref={containerRef} className={`relative inline-block ${className}`}>
+        <DropdownContext.Provider value={{ open, setOpen, triggerRef, contentRef }}>
+            <div ref={containerRef} className={`relative ${className}`} style={{ display: 'contents' }}>
                 {children}
             </div>
         </DropdownContext.Provider>
@@ -65,50 +71,73 @@ export function Dropdown({
 
 // Trigger (asChild pattern)
 export function DropdownTrigger({ children }) {
-    const { open, setOpen } = useContext(DropdownContext);
+    const { open, setOpen, triggerRef } = useContext(DropdownContext);
 
     if (!children) return null;
 
     return cloneElement(children, {
+        ref: triggerRef,
         onClick: (e) => {
             children.props.onClick?.(e);
             setOpen(!open);
         },
         "aria-expanded": open,
         "aria-haspopup": "menu",
+        className: `${children.props.className || ""} relative`,
     });
 }
 
 // Content
 export function DropdownContent({ children, className = "" }) {
-    const { open } = useContext(DropdownContext);
+    const { open, triggerRef, contentRef } = useContext(DropdownContext);
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+
+    useEffect(() => {
+        if (open && triggerRef?.current) {
+            const rect = triggerRef.current.getBoundingClientRect();
+            const dropdownWidth = 192;
+            const margin = 16;
+            const calculatedLeft = rect.right + window.scrollX - dropdownWidth;
+            const maxLeft = window.innerWidth + window.scrollX - dropdownWidth - margin;
+            
+            setPosition({
+                top: rect.bottom + window.scrollY + 8,
+                left: Math.min(calculatedLeft, maxLeft),
+            });
+        }
+    }, [open, triggerRef]);
 
     if (!open) return null;
-    return (
+
+    const contentElement = (
         <div
+            ref={contentRef}
             role="menu"
             className={`
-                absolute right-0 top-full z-50
-                mt-2
+                fixed z-110
                 min-w-48
                 border border-neutral-200
                 bg-white
+                text-neutral-950
                 shadow-lg shadow-black/10
                 p-1
                 dark:border-neutral-700
                 dark:bg-neutral-950
                 dark:text-white
-                backdrop-blur-[1px]
                 rounded-xl
                 overflow-hidden
-
-                text-white
                 ${className}
             `}
+            style={{
+                top: `${position.top}px`,
+                left: `${position.left}px`,
+            }}
         >
             {children}
         </div>
     );
+
+    return createPortal(contentElement, document.body);
 }
 
 // Item
@@ -123,6 +152,27 @@ export function DropdownItem({
         onClick?.(e);
         setOpen(false);
     };
+
+    // Si el children es un Link (tiene props.to), renderizar como <div> para permitir navegación
+    if (children?.type?.name === 'Link' || children?.props?.to) {
+        return (
+            <div
+                role="menuitem"
+                className={`
+                    w-full text-left px-0 py-0 rounded-lg hover:bg-neutral-100 focus:bg-neutral-100 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 transition-colors
+                    ${className}
+                `}
+            >
+                {cloneElement(children, {
+                    className: `${children.props.className || ""} block px-3 py-2 w-full`,
+                    onClick: (e) => {
+                        children.props.onClick?.(e);
+                        setOpen(false);
+                    }
+                })}
+            </div>
+        );
+    }
 
     return (
         <button

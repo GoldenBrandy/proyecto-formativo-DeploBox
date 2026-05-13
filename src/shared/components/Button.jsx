@@ -9,6 +9,7 @@ export default function Button({
     size = "base", // Define tamano visual
     type = "button", // Tipos de boton (button, submit, reset)
     children, // Contenido interno del boton (texto, icono)
+    className = "",
     ...props // Propiedades adicionales (onClick, disabled, etc)
 }) {
     const variants = {
@@ -42,6 +43,7 @@ export default function Button({
                 transition-colors duration-200
                 ${variants[variant]}
                 ${sizes[size]}
+                ${className}
             `}
             type={type}
             {...props}

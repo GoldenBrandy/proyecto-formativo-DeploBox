@@ -3,7 +3,7 @@ export default function Input({    label,   type = "text", error,  ...props })
      //Cuerpo de la función
     return(
         // Contenedor del input que se exporta con label, cuerpo y feedback message
-        <div className="w-[320px]">
+        <div className="w-full">
         {/* Label */}
         {label && (
             <label 
