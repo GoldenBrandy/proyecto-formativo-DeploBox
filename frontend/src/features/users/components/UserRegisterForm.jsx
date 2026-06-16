@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
+import { createUser } from "../services/userService";
 import { 
     Input, 
     Button, 
@@ -26,6 +27,8 @@ export default function UserRegisterForm({
     backTo = "/auth",
 }){
     const navigate = useNavigate();
+    //Estados
+    
     const [documentType, setDocumentType] = useState([]);
     const [formData, setFormData] = useState({
         userName: "",
@@ -36,7 +39,7 @@ export default function UserRegisterForm({
         userPassword: "",
         isStaff: false,
         isActive: true,
-        isSuperAdmin: false,
+        isSuperUser: false,
         userImage: [],
     });
 
@@ -65,6 +68,7 @@ export default function UserRegisterForm({
     };
 
     const [ errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     
     
@@ -72,36 +76,68 @@ export default function UserRegisterForm({
     /**
      * Función que se ejecuta cada vez que se envía el formulario
      */
-    const handleSubmit = (e) => {
-        // Evita que el formulario recargue la página al enviarse
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Se valida el objeto formData usando el esquema definido con zod
-        // safeParse devuelve un objeto indicando si la validación fue exitosa o no
         const result = userSchema.safeParse(formData);
 
-        // Si la validacion falla
         if(!result.success){
-            // Objeto donde se almacenarán los errores por campo
             const feldErrors = {};
-
-            // Zod devuelve los errores en un arreglo llamado issues
-            // Se recorren para asociar cada error a su campo correspondiente
             result.error.issues.forEach((issue) => {
-                // issue.path contiene la ruta del campo que falló 
-
-                //Se guarda el mensaje de error en el objeto feldErrors usando el nombre del campo como clave
                 feldErrors[issue.path[0]] = issue.message;
             });
-            // Se actualiza el estado de errores para mostrarlos en el formulario
             setErrors(feldErrors);
-            
-            // se detiene la ejecución
             return;
         }
 
-        setErrors({}); // Si la validación es exitosa, se limpian los errores
-        console.log("Usuario Válido:", result.data); // Se muestra el objeto validado en la consola
+        setErrors({});
+        setIsSubmitting(true);
+        const showBrowserNotification = (title, body) => {
+            if (typeof window === 'undefined') return;
+            if (!('Notification' in window)) {
+                alert(body);
+                return;
+            }
+
+            if (Notification.permission === 'granted') {
+                new Notification(title, { body });
+                return;
+            }
+
+            if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === 'granted') new Notification(title, { body });
+                    else alert(body);
+                });
+                return;
+            }
+
+            alert(body);
+        };
+
+        try {
+            const payload = {
+                name: result.data.userName,
+                userEmail: result.data.userEmail,
+                phone: result.data.userPhone,
+                documentType: result.data.userDocumentType,
+                documentNumber: result.data.userDocumentNumber,
+                password: result.data.userPassword,
+                // avatarUrl: could be derived from uploaded file; leave null for now
+                avatarUrl: null,
+                isStaff: result.data.isStaff,
+                isActive: result.data.isActive,
+                isSuperUser: result.data.isSuperUser,
+            };
+            const res = await createUser(payload);
+            showBrowserNotification('Usuario creado', res?.message ?? 'Usuario creado correctamente');
+            navigate(nextTo);
+        } catch (err) {
+            console.error(err);
+            alert("Error al guardar usuario: " + (err?.message || err));
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
 
@@ -189,33 +225,15 @@ export default function UserRegisterForm({
 
                         <div className="flex h-12 items-center">
                             <Checkbox
-                                id="isStaff"
-                                name="isStaff"
-                                label="Es staff"
-                                checked={formData.isStaff}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex h-12 items-center">
-                            <Checkbox
-                                id="isActive"
-                                name="isActive"
-                                label="Está activo?"
-                                checked={formData.isActive}
+                                id="isSuperUser"
+                                name="isSuperUser"
+                                label="Es super usuario"
+                                checked={formData.isSuperUser}
                                 onChange={handleChange}
                             />
                         </div>
 
                         <div className="flex h-12 items-center gap-4">
-                            <Checkbox
-                                id="isSuperAdmin"
-                                name="isSuperAdmin"
-                                label="Es un super administrador?"
-                                checked={formData.isSuperAdmin}
-                                onChange={handleChange}
-                            />
-
                             <FileInput
                                 value={formData.userImage}
                                 onChange={(files) =>
@@ -231,8 +249,8 @@ export default function UserRegisterForm({
                             Cancelar
                         </Button>
 
-                        <Button variant="primary" type="submit">
-                            Guardar
+                        <Button variant="primary" type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? "Guardando..." : "Guardar"}
                         </Button>
 
                         <IconButton ariaLabel="Ir al dashboard" variant="ghost" onClick={() => navigate(nextTo)}>

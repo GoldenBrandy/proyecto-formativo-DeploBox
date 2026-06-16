@@ -36,16 +36,19 @@ export default function Select({
             }
             `}
             {...props}
-        >
-            {options.map((option) => (
-                <option 
-                    key={option.value} 
-                    value={option.value}
                 >
-                    {option.label}
-                </option>
-            ))}
-        </select>     
+                        {(options || []).map((opt) => {
+                            const isString = typeof opt === "string";
+                            const value = isString ? opt : opt?.value ?? opt?.id ?? '';
+                            const labelText = isString ? opt : opt?.label ?? String(value);
+                            const key = opt?.id ?? opt?.value ?? value;
+                            return (
+                                <option key={key} value={value}>
+                                    {labelText}
+                                </option>
+                            );
+                        })}
+                </select>
         {error && <p className="mt-1 w-full text-left text-caption text-red-800">{error}</p>}
         </div>
     )

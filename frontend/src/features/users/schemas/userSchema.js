@@ -34,7 +34,7 @@ export const userSchema = z.object({
     .regex(/[^A-Za-z0-9]/, "La contraseña debe contener al menos un carácter especial"),
     isStaff: z.boolean(),
     isActive: z.boolean(),
-    isSuperAdmin: z.boolean(),
+    isSuperUser: z.boolean(),
     
     userImage: fileSchema.shape.files.optional()
 })
