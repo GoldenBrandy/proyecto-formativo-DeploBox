@@ -21,6 +21,17 @@ const router = Router();
 router.post("/", userController.create);
 
 
+// Definimos la ruta para obtener un usuario por id
+// GET /users/:id
+// Se usa para precargar el formulario de edicion con los datos actuales.
+router.get("/:id", userController.getById);
+
+
+// Definimos la ruta para actualizar un usuario existente
+// PUT /users/:id
+router.put("/:id", userController.update);
+
+
 // Exportamos el router para ser registrado en la aplicación principal
 // (ej: app.use("/users", router))
 export default router;

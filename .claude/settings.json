@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm \"C:\\\\Users\\\\DELL\\\\OneDrive\\\\Desktop\\\\PROYECTO-DE-FORMACIÓN\\\\frontend\\\\src\\\\features\\\\productos\\\\data\\\\productos.js\")",
+      "Bash(rmdir \"C:\\\\Users\\\\DELL\\\\OneDrive\\\\Desktop\\\\PROYECTO-DE-FORMACIÓN\\\\frontend\\\\src\\\\features\\\\productos\\\\data\")",
+      "Bash(rm \"C:\\\\Users\\\\DELL\\\\OneDrive\\\\Desktop\\\\PROYECTO-DE-FORMACIÓN\\\\frontend\\\\src\\\\features\\\\prestamos\\\\data\\\\prestamos.js\")",
+      "Bash(rmdir \"C:\\\\Users\\\\DELL\\\\OneDrive\\\\Desktop\\\\PROYECTO-DE-FORMACIÓN\\\\frontend\\\\src\\\\features\\\\prestamos\\\\data\")",
+      "Bash(rm \"C:\\\\Users\\\\DELL\\\\OneDrive\\\\Desktop\\\\PROYECTO-DE-FORMACIÓN\\\\frontend\\\\src\\\\features\\\\grupos\\\\data\\\\grupos.js\")",
+      "Bash(rmdir \"C:\\\\Users\\\\DELL\\\\OneDrive\\\\Desktop\\\\PROYECTO-DE-FORMACIÓN\\\\frontend\\\\src\\\\features\\\\grupos\\\\data\")",
+      "Bash(curl -s -X PUT http://localhost:4000/api/marcas/1 -H \"Content-Type: application/json\" -d '{\"name\":\"Dell Actualizado\",\"code\":\"MRC-001\",\"status\":\"activo\",\"description\":\"desc\"}')",
+      "Bash(curl -s -X PUT http://localhost:4000/api/productos/1 -H \"Content-Type: application/json\" -d '{\"name\":\"Portatil X\",\"productCode\":\"PRD-001\",\"type\":\"equipo\",\"category\":\"tecnologia\",\"responsible\":\"2\",\"status\":\"activo\",\"lastMovement\":\"Entrega\",\"location\":\"Bodega A\",\"quantity\":5,\"supplier\":\"Dell\",\"observations\":\"\"}')",
+      "Bash(curl -s -X PUT http://localhost:4000/api/grupos/1 -H \"Content-Type: application/json\" -d '{\"groupName\":\"Soporte Actualizado\",\"groupCode\":\"GRP-001\",\"groupType\":\"operativo\",\"groupLeader\":\"2\",\"groupMembers\":[\"2\",\"3\"],\"permissionsScope\":\"escritura\",\"level\":\"intermedio\",\"status\":\"activo\",\"description\":\"\"}')",
+      "Bash(curl -s http://localhost:4000/api/grupos/1)",
+      "Bash(curl -s -X PUT http://localhost:4000/api/prestamos/1 -H \"Content-Type: application/json\" -d '{\"materialType\":\"Devolutivo\",\"requestingUser\":\"2\",\"lendingUser\":\"3\",\"group\":\"1\",\"justification\":\"actualizado\",\"loanType\":\"interno\",\"startDate\":\"2026-07-20\",\"dueDate\":\"2026-07-23\"}')",
+      "Bash(taskkill //F //PID 2504)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -X POST http://localhost:4000/api/users -H 'Content-Type: application/json' -d '{ *)",
+      "Bash(curl -s -X POST http://localhost:4000/api/auth/login -H \"Content-Type: application/json\" -d '{\"userEmail\":\"superadmin@sena.edu.co\",\"userPassword\":\"SuperAdmin123!\"}')",
+      "Bash(taskkill //F //PID 26972)",
+      "Bash(npm run *)",
+      "Bash(curl -s -X POST http://localhost:4000/api/grupos -H \"Content-Type: application/json\" -d '{\"groupName\":\"Marketing\",\"groupCode\":\"ABC-001\",\"groupType\":\"academico\",\"groupLeader\":\"3\",\"groupMembers\":[\"3\",\"6\",\"7\"],\"permissionsScope\":\"total\",\"level\":\"avanzado\",\"status\":\"activo\",\"description\":\"\"}')",
+      "Bash(curl -s http://localhost:4000/api/users/2/permissions)",
+      "Bash(curl -s -X PUT http://localhost:4000/api/users/2/permissions -H \"Content-Type: application/json\" -d '{\"permissions\":[\"list_materiales\",\"create_materiales\"]}')",
+      "Bash(curl -s -X PUT http://localhost:4000/api/users/2/permissions -H \"Content-Type: application/json\" -d '{\"permissions\":[]}')",
+      "Bash(curl -s http://localhost:4000/api/permissions)",
+      "Bash(curl -s -i http://localhost:4000/api/users/3)",
+      "Bash(curl -s -i -X PUT http://localhost:4000/api/users/3 -H \"Content-Type: application/json\" -d '{\"firstName\":\"Juan\",\"lastName1\":\"Cortes\",\"userEmail\":\"test@test.com\",\"status\":\"activo\",\"avatarUrl\":\"data:image/png;base64,test\"}')",
+      "Bash(curl -s -X PUT http://localhost:4000/api/users/3 -H 'Content-Type: application/json' -d '{ *)",
+      "Bash(curl -s -i -X POST http://localhost:4000/api/users -H 'Content-Type: application/json' -d '{ *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\DELL\\OneDrive\\Desktop\\PROYECTO-DE-FORMACIÓN\\frontend\\src\\features\\productos\\schemas",
+      "C:\\Users\\DELL\\OneDrive\\Desktop\\PROYECTO-DE-FORMACIÓN\\frontend\\src\\features\\access\\services",
+      "C:\\Users\\DELL\\OneDrive\\Desktop\\PROYECTO-DE-FORMACIÓN\\frontend\\src\\features\\access\\components"
+    ]
+  }
+}

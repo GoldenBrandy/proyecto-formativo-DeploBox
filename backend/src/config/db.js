@@ -1,63 +1,47 @@
-// Importamos el paquete 'pg' usando el sistema de módulos ES.// Importamos el paqueteSQL para Node.js
 import pkg from "pg";
-
-
-// Extraemos la clase Pool desde el paquete.
-// Pool gestiona un conjunto de conexiones reutilizables a la BD.
-const { Pool } = pkg;
-
-
-// Importamos dotenv para poder leer variables de entorno desde un archivo .env
 import dotenv from "dotenv";
 
+const { Pool } = pkg;
 
-// Cargamos las variables definidas en el archivo .env
-// Esto debe ejecutarse antes de acceder a process.env
-dotenv.config();
+dotenv.config({ quiet: true });
 
+const requiredVariables = [
+  "DB_HOST",
+  "DB_PORT",
+  "DB_USER",
+  "DB_PASSWORD",
+  "DB_NAME",
+];
 
-// Creamos y exportamos una instancia única del Pool de PostgreSQL
-// Esta instancia se reutiliza en toda la aplicación
+const missingVariables = requiredVariables.filter(
+  (variable) => !process.env[variable],
+);
+
+if (missingVariables.length > 0) {
+  throw new Error(
+    `Faltan variables de entorno para PostgreSQL: ${missingVariables.join(", ")}`,
+  );
+}
+
 export const pool = new Pool({
-  // Host donde se encuentra PostgreSQL (ej: localhost o IP del servidor)
   host: process.env.DB_HOST,
-
-
-  // Puerto de PostgreSQL (por defecto 5432)
-  port: process.env.DB_PORT,
-
-
-  // Usuario con permisos sobre la base de datos
+  port: Number(process.env.DB_PORT),
   user: process.env.DB_USER,
-
-
-  // Contraseña del usuario
   password: process.env.DB_PASSWORD,
-
-
-  // Nombre de la base de datos a la que nos conectamos
   database: process.env.DB_NAME,
-
-
-  // Número máximo de conexiones activas en el pool
   max: 10,
-
-
-  // Tiempo máximo (en ms) que una conexión puede estar inactiva
-  // antes de ser cerrada automáticamente
   idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
 });
 
-
-// Evento que se dispara cada vez que el pool establece una conexión
-// Útil para logs y verificación en desarrollo
-pool.on("connect", () => {
-  console.log("Conectado a PostgreSQL");
+pool.on("error", (error) => {
+  console.error("Error inesperado en el pool de PostgreSQL:", error.message);
 });
 
+export async function testDatabaseConnection() {
+  const result = await pool.query(
+    "SELECT current_database() AS database, current_user AS db_user",
+  );
 
-// Evento que se dispara cuando ocurre un error en el pool
-// Importante para monitoreo y diagnóstico de fallos
-pool.on("error", (err) => {
-  console.error("Error en la conexión con PostgreSQL", err);
-});
+  return result.rows[0];
+}
